@@ -1,0 +1,140 @@
+---
+title: "dea_athakur2"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+input<- matrix(c(150,400,320,520,350,320,0.2,0.7,1.2,2,1.2,0.7),ncol = 2)
+output <- matrix(c(14000,14000,42000,28000,19000,14000,3500,21000,10500,42000,25000,15000),ncol = 2)
+input
+output
+```
+
+
+```{r}
+colnames(input)<-c('staff_hour','supplies_day')
+colnames(output)<- c('reimbursed_pd','privately_pd')
+input
+output
+```
+```{r}
+library(Benchmarking)
+library(lpSolveAPI)
+```
+
+```{r}
+e<- dea(input,output, RTS ='crs')
+e
+```
+
+```{r}
+peers(e)
+lambda(e)
+```
+
+```{r}
+dea.plot.frontier(input,output,RTS = 'crs',xlab = 'input', ylab ='output',main ='Input vs Output (CRS)')
+```
+
+```{r}
+f<- dea(input,output, RTS ='drs')
+f
+```
+
+
+```{r}
+peers(f)
+lambda(f)
+```
+```{r}
+dea.plot.frontier(input,output,RTS = 'drs',xlab = 'input', ylab ='output',main ='Input vs Output (DRS)')
+
+```
+
+```{r}
+g<-dea(input,output, RTS ='irs')
+g
+```
+
+
+```{r}
+peers(g)
+lambda(g)
+```
+
+```{r}
+dea.plot.frontier(input,output,RTS = 'irs',xlab = 'input', ylab ='output',main ='Input vs Output (IRS)')
+```
+
+
+```{r}
+h<-dea(input,output, RTS ='vrs')
+h
+```
+
+```{r}
+peers(h)
+lambda(h)
+```
+
+```{r}
+dea.plot.frontier(input,output,RTS = 'vrs',xlab = 'input', ylab ='output',main ='Input vs Output (VRS)')
+```
+
+```{r}
+i<- dea(input,output, RTS ='fdh')
+i
+```
+
+```{r}
+peers(i)
+lambda(i)
+```
+
+```{r}
+dea.plot.frontier(input,output,RTS = 'fdh',xlab = 'input', ylab ='output',main ='Input vs Output (FDH)')
+```
+
+```{r}
+j<- dea(input,output, RTS ='fdh+')
+j
+```
+
+```{r}
+peers(j)
+lambda(j)
+```
+
+```{r}
+dea.plot.frontier(input,output,RTS = 'fdh+',xlab = 'input', ylab ='output',main ='Input vs Output (FRH)')
+```
+
+
+```{r}
+crs<-c(1.0000, 1.0000 ,1.0000, 1.0000, 0.9775, 0.8675)
+drs<-c( 1.0000, 1.0000 ,1.0000, 1.0000, 0.9775, 0.8675)
+irs<-c(1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.8963)
+vrs<-c(1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.8963)
+fdh<-c(1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000)
+frh<-c(1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000)
+facility<-c('facility 1','facility 2','facility 3','facility 4','facility 5', 'facility 6')
+```
+
+```{r}
+efficiency<-data.frame(facility,crs,drs,irs,vrs,fdh,frh)
+efficiency
+```
+
+
+
+
+
+
